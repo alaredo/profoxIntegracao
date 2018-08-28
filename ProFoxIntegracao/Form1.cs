@@ -104,7 +104,7 @@ namespace ProFoxIntegracao
                     Magento magento = new Magento();
                     if ( acao == "Atualizar Preços")
                     {
-                        magento.AtualizarPreco();
+                        magento.AtualizarPreco(integracaoConfig.TabelaPrecos);
                     }
                     if (acao == "Cadastrar Produtos")
                     {
@@ -183,6 +183,33 @@ namespace ProFoxIntegracao
             FrmConfig frmConfig = new FrmConfig();
             frmConfig.ShowDialog();
             loadConfig();
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            Magento magento = new Magento();
+            magento.AtualizarPreco(integracaoConfig.TabelaPrecos);
+            this.Cursor = Cursors.Default;
+            MessageBox.Show("Atualização de preços concluida");
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            Magento magento = new Magento();
+            magento.AtualizarEstoque();
+            this.Cursor = Cursors.Default;
+            MessageBox.Show("Atualização de estoque concluido");
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            Magento magento = new Magento();
+            lstPedidos = magento.BuscarPedidos();
+            dataGridView2.DataSource = lstPedidos;
+            this.Cursor = Cursors.Default;
         }
     }
 }

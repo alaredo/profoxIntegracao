@@ -30,25 +30,24 @@ namespace ProFoxIntegracao
                 String mSession = portTypeClient.login(user, apiKey);
 
                 MagentoService.filters filters = new MagentoService.filters();
-                
-                List <MagentoService.catalogProductAttributeSetEntity> lstCatalogAttributeEntity = new List<MagentoService.catalogProductAttributeSetEntity>();
-                lstCatalogAttributeEntity = portTypeClient.catalogProductAttributeSetList(mSession).ToList<MagentoService.catalogProductAttributeSetEntity>();
 
-                MagentoService.catalogCategoryTree catalogCategoryTree = new MagentoService.catalogCategoryTree();
-                catalogCategoryTree = portTypeClient.catalogCategoryTree(mSession, "1", "");
+                //  List <MagentoService.catalogProductAttributeSetEntity> lstCatalogAttributeEntity = new List<MagentoService.catalogProductAttributeSetEntity>();
+                //  lstCatalogAttributeEntity = portTypeClient.catalogProductAttributeSetList(mSession).ToList<MagentoService.catalogProductAttributeSetEntity>();
 
-                List<MagentoService.catalogProductTypeEntity> lstTypes = new List<MagentoService.catalogProductTypeEntity>();
-                lstTypes = portTypeClient.catalogProductTypeList(mSession).ToList<MagentoService.catalogProductTypeEntity>();
+                //  MagentoService.catalogCategoryTree catalogCategoryTree = new MagentoService.catalogCategoryTree();
+                //  catalogCategoryTree = portTypeClient.catalogCategoryTree(mSession, "1", "");
 
-                List<MagentoService.anymarketAnymarketproductsListEntity> listProducts = new List<MagentoService.anymarketAnymarketproductsListEntity>();
-                listProducts = portTypeClient.anymarketAnymarketproductsList(mSession, filters).ToList<MagentoService.anymarketAnymarketproductsListEntity>();
+                //  List<MagentoService.catalogProductTypeEntity> lstTypes = new List<MagentoService.catalogProductTypeEntity>();
+                //  lstTypes = portTypeClient.catalogProductTypeList(mSession).ToList<MagentoService.catalogProductTypeEntity>();
+
+                // List<MagentoService.anymarketAnymarketproductsListEntity> listProducts = new List<MagentoService.anymarketAnymarketproductsListEntity>();
+                // listProducts = portTypeClient.anymarketAnymarketproductsList(mSession, filters).ToList<MagentoService.anymarketAnymarketproductsListEntity>();
 
                 MagentoService.catalogProductEntity[] lstProducts = new MagentoService.catalogProductEntity[] { };
 
                // portTypeClient.catalogProductList(out lstProducts, mSession, filters, "1");
                 portTypeClient.catalogProductList(out lstProducts, mSession, filters, "default");
 
-                
 
                 List<MagentoService.storeEntity> lstStore = new List<MagentoService.storeEntity>();
                 lstStore = portTypeClient.storeList(mSession).ToList<MagentoService.storeEntity>();
@@ -78,16 +77,15 @@ namespace ProFoxIntegracao
 
                         // catalogProductCreateEntity.additional_attributes = lstCatalogAttributeEntity[0];
                         int result = portTypeClient.catalogProductCreate(mSession, "simple", "4", r["codigo"].ToString().Trim(), catalogProductCreateEntity, "default");
+
+                        Log.Set("Sucesso Cadastro Produto: " + r["nome"].ToString().Trim());
                     } catch (Exception ex)
                     {
                         string message = ex.Message;
                         Log.Set("ERRO CadastrarProdutos: " + message);
                     }
-                    
                 }
 
-                
-                
             } catch (Exception ex)
             {
                 string message = ex.Message;
@@ -95,7 +93,7 @@ namespace ProFoxIntegracao
             }
         }
 
-        public void AtualizarPreco()
+        public void AtualizarPreco(string tabPrecos)
         {
             try
             {
@@ -106,7 +104,7 @@ namespace ProFoxIntegracao
 
                 Db db = new Db();
                 DataTable dataTable = new DataTable();
-                dataTable = db.GetProdutosCadastrados();
+                dataTable = db.GetPrecosProdutos(tabPrecos);
                 foreach (DataRow r in dataTable.Rows)
                 {
                     try
@@ -122,18 +120,19 @@ namespace ProFoxIntegracao
                         catalogProductCreateEntity.meta_title = r["nome"].ToString().Trim();
                         catalogProductCreateEntity.short_description = r["nome"].ToString().Trim();
                         catalogProductCreateEntity.weight = r["peso"].ToString().Trim();
-                        catalogProductCreateEntity.price = r["precoVenda1"].ToString().Trim();
+                        catalogProductCreateEntity.price = r["preco"].ToString().Trim();
                         catalogProductCreateEntity.stock_data = catalogInventoryStockItemUpdateEntity;
 
 
                         bool result = portTypeClient.catalogProductUpdate(mSession, r["codigo"].ToString().Trim(), catalogProductCreateEntity, "default", "sku");
+
+                        Log.Set("Sucesso Atualizar Preço: " + r["codigo"].ToString().Trim() + " - " + r["preco"].ToString().Trim());
                     }
                     catch (Exception ex)
                     {
                         string message = ex.Message;
                         Log.Set("ERRO AtualizarPreco: " + codigo  + " - " + message);
                     }
-
                 }
             }
             catch (Exception ex)
@@ -168,6 +167,8 @@ namespace ProFoxIntegracao
 
                         // catalogProductCreateEntity.additional_attributes = lstCatalogAttributeEntity[0];
                         //int result = portTypeClient.catalogProductCreate(mSession, "simple", "4", r["codigo"].ToString().Trim(), catalogProductCreateEntity, "default");
+
+                        Log.Set("Sucesso Atualizar Preço: " + r["codigo"].ToString().Trim() + " - " + r["saldo"].ToString().Trim());
                     }
                     catch (Exception ex)
                     {

@@ -993,6 +993,8 @@ namespace ProFoxIntegracao
                 }
                 if (!error)
                 {
+                    Log.Set("Sucesso Salvar Pedido: " + increment_id);
+
                     transacao.Commit();
                     MessageBox.Show("Pedido Importado com sucesso");
                 } else
@@ -1010,6 +1012,21 @@ namespace ProFoxIntegracao
                 Log.Set("ERRO savePedido: " + message + " - " + message);
             }
 
+        }
+
+        public DataTable GetPrecosProdutos(String tabPrecos)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string strQuery = $"select a.codigo, a.Nome, a.texto, a.grupo, a.subgrupo, a.familia, a.peso, a.unidade, d.PRECO, a.saldo, a.grafico from produtos a, alternativos b, tabprecos c, tabprecosprodutos d where a.seq = b.seqproduto and b.VaiParaECommerce = 'S' and c.codigo = '{tabPrecos}' and d.SEQPRODUTO = a.seq";
+                
+                dt = Search(strQuery);
+            } catch (Exception ex)
+            {
+                Log.Set(ex.Message);
+            }
+            return dt;
         }
     }
 }

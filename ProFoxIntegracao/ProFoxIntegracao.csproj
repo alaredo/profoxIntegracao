@@ -53,11 +53,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Db.cs" />
-    <Compile Include="DBIXDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBIXDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,17 +312,6 @@
     <None Include="Connected Services\MagentoService\ProFoxIntegracao.MagentoService.storeEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="DBIXDataSet.xsc">
-      <DependentUpon>DBIXDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DBIXDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DBIXDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBIXDataSet.xss">
-      <DependentUpon>DBIXDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -355,6 +339,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

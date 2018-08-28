@@ -9,6 +9,10 @@ namespace ProFoxIntegracao
     [Serializable]
     public class IntegracaoConfig
     {
+        [DescriptionAttribute("Código da Tabela de Preços ProFox."),
+        CategoryAttribute("Produtos")]
+        public string TabelaPrecos { get; set; }
+
         [DescriptionAttribute("Código da Filial ProFox."),
         CategoryAttribute("Pedidos"),
         DefaultValueAttribute("01")]
